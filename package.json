@@ -8,5 +8,8 @@
     "name": "Darko Tomic - Tomicz Engineering LLC",
     "email": "info@tomiczengineering.com",
     "url": "https://github.com/tomicz"
+  },
+  "dependencies": {
+    "com.nethereum.unity": "1.0.0"
   }
 }

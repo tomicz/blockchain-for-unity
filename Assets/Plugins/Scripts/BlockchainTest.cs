@@ -21,7 +21,7 @@ public class BlockchainTest : MonoBehaviour
     private bool isConnected = false;
     private BlockchainConfig config;
     
-    void Start()
+    private void Start()
     {
         LoadConfig();
         TestBlockchainConnection();
@@ -31,7 +31,7 @@ public class BlockchainTest : MonoBehaviour
     {
         try
         {
-            string configPath = Path.Combine(Application.dataPath, "config.json");
+            string configPath = Path.Combine(Application.dataPath, "Plugins", "config.json");
             if (File.Exists(configPath))
             {
                 string jsonContent = File.ReadAllText(configPath);
