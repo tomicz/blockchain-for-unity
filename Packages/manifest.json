@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.nethereum.unity": "https://github.com/Nethereum/Nethereum.Unity.git",
+    "com.nethereum.unity": "https://github.com/Nethereum/Nethereum.Unity.git#5.0.0",
     "com.unity.ai.navigation": "2.0.5",
     "com.unity.collab-proxy": "2.8.2",
     "com.unity.ide.rider": "3.0.31",

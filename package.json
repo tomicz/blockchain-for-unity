@@ -10,6 +10,6 @@
     "url": "https://github.com/tomicz"
   },
   "dependencies": {
-    "com.nethereum.unity": "1.0.0"
+    "com.nethereum.unity": "5.0.0"
   }
 }
