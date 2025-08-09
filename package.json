@@ -1,0 +1,12 @@
+{
+  "name": "com.tomicz.blockchain-for-unity",
+  "version": "0.0.1",
+  "displayName": "Blockchain For Unity",
+  "description": "Create games with Blockchain in Unity.",
+  "unity": "2019.1",
+  "author": {
+    "name": "Darko Tomic - Tomicz Engineering LLC",
+    "email": "info@tomiczengineering.com",
+    "url": "https://github.com/tomicz"
+  }
+}
