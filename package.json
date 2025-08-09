@@ -2,6 +2,13 @@
   "name": "com.tomicz.blockchain-for-unity",
   "version": "0.0.1",
   "displayName": "Blockchain For Unity",
+  "samples": [
+    {
+      "displayName": "Config Template",
+      "description": "A sample config.json to copy into your project's Assets/Plugins",
+      "path": "Samples~/ConfigTemplate"
+    }
+  ],
   "description": "Create games with Blockchain in Unity.",
   "unity": "2019.1",
   "author": {
