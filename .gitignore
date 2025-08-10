@@ -99,5 +99,5 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
 # Ignore the Unity config file
-Assets/config.json
-Assets/config.json.meta
+config.json
+config.json.meta
