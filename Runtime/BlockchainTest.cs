@@ -12,11 +12,6 @@ public class BlockchainConfig
 
 public class BlockchainTest : MonoBehaviour
 {
-    [Header("TextMeshPro References")]
-    [SerializeField] private TMP_Text statusText;
-    [SerializeField] private TMP_Text blockNumberText;
-    [SerializeField] private TMP_Text gasPriceText;
-    
     private Web3 web3;
     private bool isConnected = false;
     private BlockchainConfig config;
@@ -31,7 +26,7 @@ public class BlockchainTest : MonoBehaviour
     {
         try
         {
-            string configPath = Path.Combine(Application.dataPath, "Plugins", "config.json");
+            string configPath = Path.Combine(Application.dataPath, "config.json");
             if (File.Exists(configPath))
             {
                 string jsonContent = File.ReadAllText(configPath);
@@ -73,16 +68,6 @@ public class BlockchainTest : MonoBehaviour
             
             isConnected = true;
             
-            // Update UI with results
-            if (statusText != null)
-                statusText.text = $"Connected to Ethereum Mainnet (Network ID: {networkId})";
-            
-            if (blockNumberText != null)
-                blockNumberText.text = $"Current Block: {blockNumber.Value}";
-            
-            if (gasPriceText != null)
-                gasPriceText.text = $"Gas Price: {gasPrice.Value} Wei";
-            
             Debug.Log($"Blockchain connection successful!");
             Debug.Log($"Network ID: {networkId}");
             Debug.Log($"Current Block: {blockNumber.Value}");
@@ -93,8 +78,7 @@ public class BlockchainTest : MonoBehaviour
         {
             isConnected = false;
             
-            if (statusText != null)
-                statusText.text = "Connection failed";
+            Debug.Log("Connection failed");
             
             Debug.LogError($"Blockchain connection failed: {e.Message}");
         }
