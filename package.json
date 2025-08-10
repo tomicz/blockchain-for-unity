@@ -10,7 +10,7 @@
     "url": "https://github.com/tomicz"
   },
   "dependencies": {
-    "com.reown.appkit.unity": "latest",
-    "com.reown.nethereum.unity": "latest"
+    "com.reown.appkit.unity": "https://github.com/reown-com/reown-dotnet.git?path=unity/Packages/com.reown.appkit.unity",
+    "com.reown.nethereum.unity": "https://github.com/reown-com/reown-dotnet.git?path=unity/Packages/com.reown.nethereum.unity"
   }
 }
