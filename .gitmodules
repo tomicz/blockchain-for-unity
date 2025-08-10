@@ -1,1 +1,4 @@
 
+[submodule "Plugins/Nethereum.Unity"]
+	path = Plugins/Nethereum.Unity
+	url = https://github.com/Nethereum/Nethereum.Unity.git
