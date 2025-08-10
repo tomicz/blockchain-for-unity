@@ -39,7 +39,22 @@ public class ChainConfig : EditorWindow
         }
         else
         {
-            Debug.LogError("config.json file not found in Assets folder!");
+            Debug.LogWarning("config.json not found — creating new one in Assets/ with placeholder RpcUrl.");
+
+            config = new BlockchainConfig
+            {
+                RpcUrl = "https://your-placeholder-url.com"
+            };
+
+            string jsonContent = JsonUtility.ToJson(config, true);
+            File.WriteAllText(configPath, jsonContent);
+
+            AssetDatabase.Refresh();
+
+            string reloadedContent = File.ReadAllText(configPath);
+            config = JsonUtility.FromJson<BlockchainConfig>(reloadedContent);
+
+            Debug.Log($"New config.json created at: {configPath}");
         }
     }
 
