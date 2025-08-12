@@ -4,12 +4,6 @@ using System.Threading.Tasks;
 using TMPro;
 using System.IO;
 
-[System.Serializable]
-public class BlockchainConfig
-{
-    public string RpcUrl;
-}
-
 public class BlockchainTest : MonoBehaviour
 {
     private Web3 web3;
@@ -54,16 +48,9 @@ public class BlockchainTest : MonoBehaviour
         
         try
         {
-            // Initialize Web3 with RPC URL from config
             web3 = new Web3(config.RpcUrl);
-            
-            // Test 1: Get current block number
             var blockNumber = await web3.Eth.Blocks.GetBlockNumber.SendRequestAsync();
-            
-            // Test 2: Get gas price
             var gasPrice = await web3.Eth.GasPrice.SendRequestAsync();
-            
-            // Test 3: Get network ID
             var networkId = await web3.Net.Version.SendRequestAsync();
             
             isConnected = true;

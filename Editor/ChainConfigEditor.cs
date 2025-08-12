@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 
-public class ChainConfig : EditorWindow
+public class ChainConfigEditor : EditorWindow
 {
     private static BlockchainConfig config;
     private static string configPath;
@@ -10,10 +10,13 @@ public class ChainConfig : EditorWindow
     [MenuItem("Blockchain/Config")]
     private static void OpenConfig(){
         LoadConfig();
-        ChainConfig window = GetWindow<ChainConfig>("Chain Config");
+        ChainConfigEditor window = GetWindow<ChainConfigEditor>("Chain Config");
     }
 
     private void OnGUI(){
+        GUILayout.Space(10);
+        config.ChainId = EditorGUILayout.TextField("Chain Id", config.ChainId);
+
         GUILayout.Space(10);
         config.RpcUrl = EditorGUILayout.TextField("Rpc Url", config.RpcUrl);
 
@@ -43,6 +46,7 @@ public class ChainConfig : EditorWindow
 
             config = new BlockchainConfig
             {
+                ChainId = "11155111",
                 RpcUrl = "https://your-placeholder-url.com"
             };
 
