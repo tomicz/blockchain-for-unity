@@ -7,15 +7,20 @@ public class ChainConfigEditor : EditorWindow
     private static BlockchainConfig config;
     private static string configPath;
 
-    [MenuItem("Blockchain/Config")]
+    [MenuItem("Tomicz Engineering/Chain Config")]
     private static void OpenConfig(){
         LoadConfig();
         ChainConfigEditor window = GetWindow<ChainConfigEditor>("Chain Config");
     }
 
     private void OnGUI(){
+
+        // Chain id field
+        
         GUILayout.Space(10);
         config.ChainId = EditorGUILayout.TextField("Chain Id", config.ChainId);
+
+        // Rpc url field
 
         GUILayout.Space(10);
         config.RpcUrl = EditorGUILayout.TextField("Rpc Url", config.RpcUrl);
