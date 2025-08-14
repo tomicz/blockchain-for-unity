@@ -1,6 +1,10 @@
 using UnityEngine;
 using BlockchainUnity.Services;
 using BlockchainUnity.Models;
+using System.Collections.Generic;
+using System.IO;
+using System;
+using System.Numerics;
 
 namespace BlockchainUnity.Managers
 {
@@ -17,7 +21,6 @@ namespace BlockchainUnity.Managers
 
         // Service reference
         private BlockchainService _blockchainService;
-        private string _defaultChainId = "0xaa36a7"; // Sepolia
 
         private void Start()
         {
@@ -61,12 +64,7 @@ namespace BlockchainUnity.Managers
         // Public API methods
         public void ConnectWallet()
         {
-            _blockchainService?.ConnectWallet(_defaultChainId);
-        }
-
-        public void ConnectWallet(string chainId)
-        {
-            _blockchainService?.ConnectWallet(chainId);
+            _blockchainService?.ConnectWallet();
         }
 
         public void DisconnectWallet()
@@ -98,7 +96,7 @@ namespace BlockchainUnity.Managers
                         data = data ?? "0x" 
                     }) 
                 },
-                id = Random.Range(1, 1000)
+                id = UnityEngine.Random.Range(1, 1000)
             };
 
             _blockchainService?.SendRpcRequest(request, onSuccess, onError);
@@ -115,14 +113,24 @@ namespace BlockchainUnity.Managers
         public string CurrentChainId => _blockchainService?.CurrentChainId;
 
         // Configuration methods
-        public void SetDefaultChainId(string chainId)
+        public BlockchainConfig GetCurrentNetwork()
         {
-            _defaultChainId = chainId;
+            return _blockchainService?.GetCurrentNetwork();
         }
 
-        public string GetDefaultChainId()
+        public string GetNetworkName()
         {
-            return _defaultChainId;
+            return _blockchainService?.GetCurrentNetwork()?.networkName ?? "sepolia";
+        }
+
+        public string GetChainId()
+        {
+            return _blockchainService?.GetCurrentNetwork()?.HexChainId ?? "0xaa36a7";
+        }
+
+        public string GetCurrencySymbol()
+        {
+            return _blockchainService?.GetCurrentNetwork()?.currencySymbol ?? "SepoliaETH";
         }
     }
 }

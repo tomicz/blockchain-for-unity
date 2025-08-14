@@ -2,7 +2,7 @@
   "name": "com.tomicz.blockchain-for-unity",
   "version": "0.0.1",
   "displayName": "Blockchain For Unity",
-  "description": "Create games with Blockchain in Unity.",
+  "description": "Create games with EVM blockchains in Unity.",
   "unity": "2019.1",
   "author": {
     "name": "Darko Tomic - Tomicz Engineering LLC",

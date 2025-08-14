@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.IO; // Add this for Path and File
 using BlockchainUnity.Core;
 using BlockchainUnity.Models;
 
@@ -53,15 +54,18 @@ namespace BlockchainUnity.Services
         /// <summary>
         /// Connect to MetaMask wallet
         /// </summary>
-        public void ConnectWallet(string chainId = "0xaa36a7") // Default: Sepolia
+        public void ConnectWallet()
         {
+            var networkConfig = GetNetworkConfig();
+            
             if (!_ethereumBridge.CheckMetaMaskAvailability())
             {
                 OnError?.Invoke("MetaMask is not available");
                 return;
             }
 
-            _ethereumBridge.ConnectWallet(chainId, gameObject.name, "OnWalletConnectionSuccess", "OnWalletConnectionError");
+            Debug.Log($"Connecting to network: {networkConfig.DisplayName} (Chain ID: {networkConfig.HexChainId})");
+            _ethereumBridge.ConnectWallet(networkConfig.HexChainId, gameObject.name, "OnWalletConnectionSuccess", "OnWalletConnectionError");
         }
 
         /// <summary>
@@ -207,24 +211,72 @@ namespace BlockchainUnity.Services
         {
             try
             {
-                // Remove "0x" prefix and parse as hex
+                var networkConfig = GetNetworkConfig();
+                
                 string hexWithoutPrefix = hexBalance.Substring(2);
                 BigInteger wei = BigInteger.Parse("0" + hexWithoutPrefix, System.Globalization.NumberStyles.HexNumber);
                 
-                // Convert Wei to ETH (1 ETH = 10^18 Wei)
                 decimal eth = (decimal)wei / (decimal)Math.Pow(10, 18);
-                
-                // Format the balance like MetaMask does (up to 6 decimal places)
                 string formatted = eth.ToString("F6").TrimEnd('0').TrimEnd('.');
                 if (formatted == "") formatted = "0";
                 
-                return (formatted, "ETH");
+                return (formatted, networkConfig.currencySymbol);
             }
             catch (Exception e)
             {
                 Debug.LogError($"Error in ParseBalance: {e.Message}");
                 return ("0", "ETH");
             }
+        }
+
+        private BlockchainConfig _config;
+
+        private void LoadConfiguration()
+        {
+            try
+            {
+                string configPath = Path.Combine(Application.dataPath, "config.json");
+                if (File.Exists(configPath))
+                {
+                    string jsonContent = File.ReadAllText(configPath);
+                    _config = JsonUtility.FromJson<BlockchainConfig>(jsonContent);
+                    Debug.Log($"Configuration loaded. Network: {_config.DisplayName}");
+                }
+                else
+                {
+                    Debug.LogError("config.json not found!");
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Failed to load configuration: {e.Message}");
+            }
+        }
+
+        public BlockchainConfig GetNetworkConfig()
+        {
+            if (_config == null) LoadConfiguration();
+            
+            if (_config != null)
+            {
+                return _config;
+            }
+            
+            // Fallback to Sepolia
+            return new BlockchainConfig
+            {
+                networkName = "sepolia",
+                chainId = 11155111,
+                rpcUrl = "https://sepolia.infura.io/v3/YOUR_PROJECT_ID",
+                currencySymbol = "SepoliaETH",
+                isTestnet = true
+            };
+        }
+
+        // Add method to get current network info
+        public BlockchainConfig GetCurrentNetwork()
+        {
+            return GetNetworkConfig();
         }
     }
 }

@@ -1,6 +1,6 @@
 # Blockchain for Unity
 
-First Solana and EVM blockchain SDK for Unity Game Developers. Currently supports WebGL builds with MetaMask wallet integration. Multiple platform support and additional wallet integrations are coming in future updates.
+EVM blockchain SDK for Unity Game Developers. Currently supports WebGL builds with MetaMask wallet integration. Multiple platform support and additional wallet integrations are coming in future updates.
 
 ## 🚀 Quick Start
 
@@ -15,6 +15,14 @@ manager.ConnectWallet();
 manager.OnWalletConnected += (result) => Debug.Log($"Connected: {result.address}");
 manager.OnBalanceReceived += (result) => Debug.Log($"Balance: {result.formattedBalance} {result.currencySymbol}");
 ```
+
+## ⚙️ Configuration
+
+Configure your blockchain network through Unity Editor:
+
+1. Go to **Tomicz Engineering > Chain Config**
+2. Set your network name, chain ID, RPC URL, and currency symbol
+3. Click **Update Config** to save
 
 ## ✨ Features
 
@@ -45,8 +53,8 @@ manager.OnBalanceReceived += (result) => Debug.Log($"Balance: {result.formattedB
 ## 🛠️ Installation
 
 1. Import the plugin into your Unity project
-2. Add `BlockchainManager` to a GameObject
-3. Configure your preferred chain ID
+2. Configure your network in **Tomicz Engineering > Chain Config**
+3. Add `BlockchainManager` to a GameObject
 4. Build for WebGL platform
 
 ## 🤝 Contributing

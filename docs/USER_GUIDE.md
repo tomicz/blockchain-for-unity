@@ -35,7 +35,8 @@
    var manager = blockchainObject.AddComponent<BlockchainManager>();
    ```
 
-3. **Configure Chain ID**
+3. **Configure Network**
+
    ```csharp
    // Set default network (Sepolia testnet)
    manager.SetDefaultChainId("0xaa36a7");
@@ -134,26 +135,81 @@ blockchainManager.SendCustomRpcRequest(
 
 ## ⚙️ Configuration
 
-### Setting Default Chain ID
+### Network Configuration
 
-```csharp
-// Ethereum Mainnet
-blockchainManager.SetDefaultChainId("0x1");
+Configure your EVM blockchain network through the Unity Editor:
 
-// Sepolia Testnet
-blockchainManager.SetDefaultChainId("0xaa36a7");
+1. **Open Chain Config Editor**
 
-// Polygon
-blockchainManager.SetDefaultChainId("0x89");
+   - Go to **Tomicz Engineering > Chain Config** in the Unity menu
+   - This opens the configuration window
+
+2. **Configure Network Settings**
+
+   - **Network Name**: A friendly name for your network (e.g., "sepolia", "ethereum")
+   - **Chain ID**: The decimal chain ID (e.g., 11155111 for Sepolia, 1 for Ethereum mainnet)
+   - **RPC URL**: Your RPC endpoint (e.g., Infura, Alchemy, or your own node)
+   - **Currency Symbol**: The token symbol (e.g., "SepoliaETH", "ETH", "MATIC")
+   - **Is Testnet**: Toggle for testnet vs mainnet
+
+3. **Update Configuration**
+   - Click **Update Config** to save changes
+   - The configuration is saved to `Assets/config.json`
+
+### Example Configurations
+
+#### Sepolia Testnet
+
+```json
+{
+  "networkName": "sepolia",
+  "chainId": 11155111,
+  "rpcUrl": "https://sepolia.infura.io/v3/YOUR_PROJECT_ID",
+  "currencySymbol": "SepoliaETH",
+  "isTestnet": true
+}
 ```
 
-### Getting Current Configuration
+#### Ethereum Mainnet
 
-```csharp
-string currentChain = blockchainManager.GetDefaultChainId();
-bool isConnected = blockchainManager.IsConnected;
-string currentAddress = blockchainManager.CurrentAddress;
+```json
+{
+  "networkName": "ethereum",
+  "chainId": 1,
+  "rpcUrl": "https://mainnet.infura.io/v3/YOUR_PROJECT_ID",
+  "currencySymbol": "ETH",
+  "isTestnet": false
+}
 ```
+
+#### Polygon
+
+```json
+{
+  "networkName": "polygon",
+  "chainId": 137,
+  "rpcUrl": "https://polygon-rpc.com",
+  "currencySymbol": "MATIC",
+  "isTestnet": false
+}
+```
+
+### Switching Networks
+
+To switch networks:
+
+1. Open **Tomicz Engineering > Chain Config**
+2. Update the network settings
+3. Click **Update Config**
+4. Restart your Unity application or reload the configuration
+
+### Configuration Validation
+
+The system automatically:
+
+- Converts decimal chain IDs to hexadecimal format (e.g., 11155111 → "0xaa36a7")
+- Validates RPC URL format
+- Provides fallback values if configuration is missing
 
 ## 📄 Supported Networks
 
