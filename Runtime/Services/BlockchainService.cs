@@ -229,7 +229,7 @@ namespace BlockchainUnity.Services
             }
         }
 
-        private BlockchainConfig _config;
+        private NetworkConfig _config;
 
         private void LoadConfiguration()
         {
@@ -239,7 +239,7 @@ namespace BlockchainUnity.Services
                 if (File.Exists(configPath))
                 {
                     string jsonContent = File.ReadAllText(configPath);
-                    _config = JsonUtility.FromJson<BlockchainConfig>(jsonContent);
+                    _config = JsonUtility.FromJson<NetworkConfig>(jsonContent);
                     Debug.Log($"Configuration loaded. Network: {_config.DisplayName}");
                 }
                 else
@@ -253,7 +253,7 @@ namespace BlockchainUnity.Services
             }
         }
 
-        public BlockchainConfig GetNetworkConfig()
+        public NetworkConfig GetNetworkConfig()
         {
             if (_config == null) LoadConfiguration();
             
@@ -263,7 +263,7 @@ namespace BlockchainUnity.Services
             }
             
             // Fallback to Sepolia
-            return new BlockchainConfig
+            return new NetworkConfig
             {
                 networkName = "sepolia",
                 chainId = 11155111,
@@ -274,7 +274,7 @@ namespace BlockchainUnity.Services
         }
 
         // Add method to get current network info
-        public BlockchainConfig GetCurrentNetwork()
+        public NetworkConfig GetCurrentNetwork()
         {
             return GetNetworkConfig();
         }

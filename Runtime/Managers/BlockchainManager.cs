@@ -113,7 +113,7 @@ namespace BlockchainUnity.Managers
         public string CurrentChainId => _blockchainService?.CurrentChainId;
 
         // Configuration methods
-        public BlockchainConfig GetCurrentNetwork()
+        public NetworkConfig GetCurrentNetwork()
         {
             return _blockchainService?.GetCurrentNetwork();
         }
