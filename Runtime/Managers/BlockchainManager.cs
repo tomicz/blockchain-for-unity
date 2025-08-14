@@ -9,15 +9,6 @@ namespace BlockchainUnity.Managers
     /// </summary>
     public class BlockchainManager : MonoBehaviour
     {
-        [Header("Configuration")]
-        [SerializeField] private string defaultChainId = "0xaa36a7"; // Sepolia
-        
-        [Header("UI References")]
-        [SerializeField] private TMPro.TextMeshProUGUI addressText;
-        [SerializeField] private TMPro.TextMeshProUGUI balanceText;
-        [SerializeField] private UnityEngine.UI.Button connectButton;
-        [SerializeField] private UnityEngine.UI.Button disconnectButton;
-
         // Events
         public System.Action<WalletConnectionResult> OnWalletConnected;
         public System.Action<string> OnWalletDisconnected;
@@ -26,12 +17,12 @@ namespace BlockchainUnity.Managers
 
         // Service reference
         private BlockchainService _blockchainService;
+        private string _defaultChainId = "0xaa36a7"; // Sepolia
 
         private void Start()
         {
             SetupService();
             SetupEventListeners();
-            SetupUI();
         }
 
         private void SetupService()
@@ -56,15 +47,6 @@ namespace BlockchainUnity.Managers
             }
         }
 
-        private void SetupUI()
-        {
-            if (connectButton != null)
-                connectButton.onClick.AddListener(ConnectWallet);
-            
-            if (disconnectButton != null)
-                disconnectButton.onClick.AddListener(DisconnectWallet);
-        }
-
         private void OnDestroy()
         {
             if (_blockchainService != null)
@@ -79,7 +61,12 @@ namespace BlockchainUnity.Managers
         // Public API methods
         public void ConnectWallet()
         {
-            _blockchainService?.ConnectWallet(defaultChainId);
+            _blockchainService?.ConnectWallet(_defaultChainId);
+        }
+
+        public void ConnectWallet(string chainId)
+        {
+            _blockchainService?.ConnectWallet(chainId);
         }
 
         public void DisconnectWallet()
@@ -90,6 +77,11 @@ namespace BlockchainUnity.Managers
         public void GetBalance()
         {
             _blockchainService?.GetBalance();
+        }
+
+        public void GetBalance(string address)
+        {
+            _blockchainService?.GetBalance(address);
         }
 
         public void SendTransaction(string to, string value, string data = null, System.Action<RpcResponse> onSuccess = null, System.Action<string> onError = null)
@@ -122,26 +114,15 @@ namespace BlockchainUnity.Managers
         public string CurrentAddress => _blockchainService?.CurrentAddress;
         public string CurrentChainId => _blockchainService?.CurrentChainId;
 
-        // UI Update methods
-        private void UpdateAddressUI(string address)
+        // Configuration methods
+        public void SetDefaultChainId(string chainId)
         {
-            if (addressText != null)
-                addressText.text = $"Address: {address}";
+            _defaultChainId = chainId;
         }
 
-        private void UpdateBalanceUI(string balance, string symbol)
+        public string GetDefaultChainId()
         {
-            if (balanceText != null)
-                balanceText.text = $"{balance} {symbol}";
-        }
-
-        private void UpdateConnectionUI(bool isConnected)
-        {
-            if (connectButton != null)
-                connectButton.gameObject.SetActive(!isConnected);
-            
-            if (disconnectButton != null)
-                disconnectButton.gameObject.SetActive(isConnected);
+            return _defaultChainId;
         }
     }
 }

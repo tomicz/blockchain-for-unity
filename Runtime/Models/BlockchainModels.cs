@@ -25,6 +25,9 @@ namespace BlockchainUnity.Models
     {
         public string message;
         public int code;
+        
+        // Helper property to check if this is a real error
+        public bool HasError => !string.IsNullOrEmpty(message);
     }
 
     [Serializable]

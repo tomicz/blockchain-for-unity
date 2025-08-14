@@ -130,20 +130,33 @@ namespace BlockchainUnity.Services
             try
             {
                 var response = JsonUtility.FromJson<RpcResponse>(jsonResponse);
-                if (response.error != null)
+                
+                // Check if there's actually an error (not just an empty error object)
+                if (response.error != null && !string.IsNullOrEmpty(response.error.message))
                 {
                     OnError?.Invoke(response.error.message);
                     return;
                 }
 
-                var balance = ParseBalance(response.result);
-                OnBalanceReceived?.Invoke(new BalanceResult
+                // If we have a result, proceed with parsing
+                if (!string.IsNullOrEmpty(response.result))
                 {
-                    success = true,
-                    balance = response.result,
-                    formattedBalance = balance.formatted,
-                    currencySymbol = balance.symbol
-                });
+                    var balance = ParseBalance(response.result);
+                    
+                    var balanceResult = new BalanceResult
+                    {
+                        success = true,
+                        balance = response.result,
+                        formattedBalance = balance.formatted,
+                        currencySymbol = balance.symbol
+                    };
+                    
+                    OnBalanceReceived?.Invoke(balanceResult);
+                }
+                else
+                {
+                    OnError?.Invoke("No result in RPC response");
+                }
             }
             catch (Exception e)
             {
@@ -192,12 +205,26 @@ namespace BlockchainUnity.Services
 
         private (string formatted, string symbol) ParseBalance(string hexBalance)
         {
-            BigInteger wei = BigInteger.Parse("0" + hexBalance.Substring(2), System.Globalization.NumberStyles.HexNumber);
-            decimal eth = (decimal)wei / (decimal)Math.Pow(10, 18);
-            string formatted = eth.ToString("F6").TrimEnd('0').TrimEnd('.');
-            if (formatted == "") formatted = "0";
-            
-            return (formatted, "ETH"); // You can make this dynamic based on chain
+            try
+            {
+                // Remove "0x" prefix and parse as hex
+                string hexWithoutPrefix = hexBalance.Substring(2);
+                BigInteger wei = BigInteger.Parse("0" + hexWithoutPrefix, System.Globalization.NumberStyles.HexNumber);
+                
+                // Convert Wei to ETH (1 ETH = 10^18 Wei)
+                decimal eth = (decimal)wei / (decimal)Math.Pow(10, 18);
+                
+                // Format the balance like MetaMask does (up to 6 decimal places)
+                string formatted = eth.ToString("F6").TrimEnd('0').TrimEnd('.');
+                if (formatted == "") formatted = "0";
+                
+                return (formatted, "ETH");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Error in ParseBalance: {e.Message}");
+                return ("0", "ETH");
+            }
         }
     }
 }
