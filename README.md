@@ -50,6 +50,21 @@ Configure your blockchain network through Unity Editor:
 - [🧪 Examples](docs/EXAMPLES.md) - Code examples and use cases
 - [🔍 Troubleshooting](docs/TROUBLESHOOTING.md) - Common issues and solutions
 
+## 🎮 Examples Repository
+
+For complete, ready-to-use examples demonstrating how to integrate blockchain functionality into Unity applications, check out our **[Unity Blockchain SDK Examples](https://github.com/tomicz/unity-blockchain-sdk-examples)** repository.
+
+### What's Included:
+
+- **MetaMask Integration**: Complete example with UI for connecting to MetaMask
+- **Wallet Management**: Connect, disconnect, and manage wallet connections
+- **Balance Checking**: Get and display wallet balances
+- **Network Support**: Support for multiple Ethereum networks
+- **Real-time UI Updates**: Automatic UI updates based on connection state
+- **Configuration Examples**: Network setup and RPC provider examples
+
+Perfect for developers who want to see the plugin in action or need a starting point for their own implementations.
+
 ## 🛠️ Installation
 
 1. Import the plugin into your Unity project
