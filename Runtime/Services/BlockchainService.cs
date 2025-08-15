@@ -56,7 +56,7 @@ namespace BlockchainUnity.Services
         /// </summary>
         public void ConnectWallet()
         {
-            var networkConfig = GetNetworkConfig();
+            NetworkConfig networkConfig = GetNetworkConfig();
             
             if (!_ethereumBridge.CheckMetaMaskAvailability())
             {
@@ -90,7 +90,7 @@ namespace BlockchainUnity.Services
                 return;
             }
 
-            var request = new RpcRequest
+            RpcRequest request = new RpcRequest
             {
                 method = "eth_getBalance",
                 @params = new string[] { targetAddress, "latest" },
@@ -133,7 +133,7 @@ namespace BlockchainUnity.Services
         {
             try
             {
-                var response = JsonUtility.FromJson<RpcResponse>(jsonResponse);
+                RpcResponse response = JsonUtility.FromJson<RpcResponse>(jsonResponse);
                 
                 // Check if there's actually an error (not just an empty error object)
                 if (response.error != null && !string.IsNullOrEmpty(response.error.message))
@@ -145,9 +145,9 @@ namespace BlockchainUnity.Services
                 // If we have a result, proceed with parsing
                 if (!string.IsNullOrEmpty(response.result))
                 {
-                    var balance = ParseBalance(response.result);
+                    (string formatted, string symbol) balance = ParseBalance(response.result);
                     
-                    var balanceResult = new BalanceResult
+                    BalanceResult balanceResult = new BalanceResult
                     {
                         success = true,
                         balance = response.result,
@@ -177,8 +177,8 @@ namespace BlockchainUnity.Services
         {
             try
             {
-                var response = JsonUtility.FromJson<RpcResponse>(jsonResponse);
-                if (_pendingRequests.TryGetValue(response.id, out var callback))
+                RpcResponse response = JsonUtility.FromJson<RpcResponse>(jsonResponse);
+                if (_pendingRequests.TryGetValue(response.id, out RequestCallback callback))
                 {
                     _pendingRequests.Remove(response.id);
                     callback.onSuccess?.Invoke(response);
@@ -194,8 +194,8 @@ namespace BlockchainUnity.Services
         {
             try
             {
-                var response = JsonUtility.FromJson<RpcResponse>(jsonResponse);
-                if (_pendingRequests.TryGetValue(response.id, out var callback))
+                RpcResponse response = JsonUtility.FromJson<RpcResponse>(jsonResponse);
+                if (_pendingRequests.TryGetValue(response.id, out RequestCallback callback))
                 {
                     _pendingRequests.Remove(response.id);
                     callback.onError?.Invoke(response.error?.message ?? "Unknown error");
@@ -211,7 +211,7 @@ namespace BlockchainUnity.Services
         {
             try
             {
-                var networkConfig = GetNetworkConfig();
+                NetworkConfig networkConfig = GetNetworkConfig();
                 
                 string hexWithoutPrefix = hexBalance.Substring(2);
                 BigInteger wei = BigInteger.Parse("0" + hexWithoutPrefix, System.Globalization.NumberStyles.HexNumber);

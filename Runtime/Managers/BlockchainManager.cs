@@ -14,10 +14,10 @@ namespace BlockchainUnity.Managers
     public class BlockchainManager : MonoBehaviour
     {
         // Events
-        public System.Action<WalletConnectionResult> OnWalletConnected;
-        public System.Action<string> OnWalletDisconnected;
-        public System.Action<BalanceResult> OnBalanceReceived;
-        public System.Action<string> OnError;
+        public Action<WalletConnectionResult> OnWalletConnected;
+        public Action<string> OnWalletDisconnected;
+        public Action<BalanceResult> OnBalanceReceived;
+        public Action<string> OnError;
 
         // Service reference
         private BlockchainService _blockchainService;
@@ -31,10 +31,10 @@ namespace BlockchainUnity.Managers
         private void SetupService()
         {
             // Find existing service or create new one
-            _blockchainService = FindObjectOfType<BlockchainService>();
+            _blockchainService = FindFirstObjectByType<BlockchainService>();
             if (_blockchainService == null)
             {
-                var serviceGameObject = new GameObject("BlockchainService");
+                GameObject serviceGameObject = new GameObject("BlockchainService");
                 _blockchainService = serviceGameObject.AddComponent<BlockchainService>();
             }
         }
@@ -84,7 +84,7 @@ namespace BlockchainUnity.Managers
 
         public void SendTransaction(string to, string value, string data = null, System.Action<RpcResponse> onSuccess = null, System.Action<string> onError = null)
         {
-            var request = new RpcRequest
+            RpcRequest request = new RpcRequest
             {
                 method = "eth_sendTransaction",
                 @params = new string[] 
