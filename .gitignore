@@ -101,3 +101,6 @@ InitTestScene*.unity*
 # Ignore the Unity config file
 config.json
 config.json.meta
+
+# Ignore IDEs
+.cursorrules
