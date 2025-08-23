@@ -1,12 +1,43 @@
 {
   "name": "com.tomicz.blockchain-for-unity",
   "version": "0.0.1",
-  "displayName": "Blockchain For Unity",
+  "displayName": "Blockchain for Unity",
   "description": "Create games with EVM blockchains in Unity.",
-  "unity": "2019.1",
+  "unity": "2019.4",
+  "unityRelease": "0f1",
+  "keywords": [
+    "blockchain",
+    "evm",
+    "unity",
+    "sdk",
+    "web3"
+  ],
+  "category": "SDK",
+  "dependencies": {
+    "com.reown.appkit.unity": "1.0.0",
+    "com.reown.core": "1.0.0",
+    "com.reown.core.common": "1.0.0",
+    "com.reown.core.crypto": "1.0.0",
+    "com.reown.core.network": "1.0.0",
+    "com.reown.core.storage": "1.0.0",
+    "com.reown.sign": "1.0.0",
+    "com.reown.sign.unity": "1.0.0"
+  },
   "author": {
     "name": "Darko Tomic - Tomicz Engineering LLC",
     "email": "info@tomiczengineering.com",
     "url": "https://github.com/tomicz"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomicz/blockchain-for-unity.git"
+  },
+  "samples": [
+    {
+      "displayName": "Example Scenes",
+      "description": "Sample usage of Blockchain for Unity.",
+      "path": "Samples~/ExampleScenes"
+    }
+  ]
 }
+
